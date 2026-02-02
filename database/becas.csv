@@ -1,0 +1,4 @@
+nombre,tipo,descripcion,requisitos,dirigido_a,facultad,sede,fecha_apertura,fecha_cierre,link,keywords
+Beca de Transporte,transporte,Ayuda económica para gastos de transporte,Ser estudiante regular,Estudiantes UNSa,Varias,Central,2026-03-01,2026-03-31,https://www.unsa.edu.ar/becas,transporte,beca,ayuda
+Beca de Comedor,comedor,Acceso gratuito al comedor universitario,Ingresos familiares bajos,Estudiantes UNSa,Varias,Central,2026-03-01,2026-03-31,https://www.unsa.edu.ar/becas,comedor,beca,alimentacion
+Beca de Apoyo Académico,economica,Ayuda económica mensual,Promedio mayor a 6,Estudiantes regulares,Varias,Central,2026-03-01,2026-03-31,https://www.unsa.edu.ar/becas,ayuda,beca,economica
