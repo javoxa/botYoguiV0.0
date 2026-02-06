@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Bot UNSA - VERSIÓN FINAL MODULAR
+Bot UNSA - VERSIÓN FINAL MODULAR del 06/2/26,estamos lejos aun
 """
 
 import asyncio
@@ -147,8 +147,8 @@ RESPUESTA BREVE Y PRECISA:"""
             "/stats – Estadísticas del bot\n"
             "/diagnose – Estado del sistema\n\n"
             "*Enlaces útiles:*\n"
-            "🔗 https://www.unsa.edu.ar    \n"
-            "🔗 https://exactas.unsa.edu.ar    ",
+            "🔗 https://www.unsa.edu.ar      \n"
+            "🔗 https://exactas.unsa.edu.ar      ",
             parse_mode="Markdown"
         )
 
@@ -293,6 +293,22 @@ RESPUESTA BREVE Y PRECISA:"""
         #  Recién acá consultar la base
         context_text, results, mode = await self.retriever.retrieve(msg,limit=20)
 
+        # ========== NUEVO: Construcción de Contexto Detallado ==========
+        # Construir un contexto detallado que incluya la nueva columna 'descripcion'
+        detailed_context_parts = []
+        for res in results:
+            part = f"Nombre/Campo Principal: {res.content}\n"
+            if res.description: # <-- AQUI se usa la nueva columna
+                 part += f"Descripción/Orientación: {res.description}\n"
+            part += f"Categoría: {res.category}, Facultad: {res.faculty}\n"
+            # Opcional: Añadir keywords
+            # part += f"Keywords: {', '.join(res.keywords)}\n"
+            part += "---\n" # Separador entre resultados
+            detailed_context_parts.append(part)
+
+        detailed_context = "\n".join(detailed_context_parts)
+        # ==============================================================
+
         # Guardar resultados recientes si parecen carreras
         if results and any("Carrera" in r.content for r in results):
             self.last_results_by_user[user_hash] = results
@@ -341,7 +357,7 @@ RESPUESTA BREVE Y PRECISA:"""
 
         if mode == ResponseMode.FALLBACK:
             await update.message.reply_text(
-                "No tengo información específica sobre eso.\nVisitá https://www.unsa.edu.ar"
+                "No tengo información específica sobre eso.\nVisitá https://www.unsa.edu.ar  "
             )
             return
 
@@ -379,7 +395,8 @@ RESPUESTA BREVE Y PRECISA:"""
             return
 
         try:
-            prompt = self._build_prompt(msg, context_text)
+            # CAMBIADO: Usar detailed_context que incluye la descripcion
+            prompt = self._build_prompt(msg, detailed_context)
             answer = await self._call_llm(prompt, user_hash)
 
             if answer:
