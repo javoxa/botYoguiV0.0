@@ -31,3 +31,6 @@ Pillow>=10.0.0
 
 # Cryptography
 cryptography>=41.0.0
+
+# Read prompt
+pyyml>=6.0.2
